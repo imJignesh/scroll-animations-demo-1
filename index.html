@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animate On Scroll</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Catamaran:wght@200;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        overflow: hidden;
+        font-family: "Catamaran", sans-serif;
+        perspective: 1000px;
+        font-weight: 800;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+      }
+      .scroll__container {
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+      }
+
+      .scroll__container:before {
+        content: "";
+        top: -40vw;
+        left: -40vw;
+        width: 60vw;
+        height: 60vw;
+        border: 15vw solid #eee;
+        border-radius: 50%;
+        position: fixed;
+      }
+      section {
+        height: 100vh;
+        scroll-snap-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      section h2 {
+        text-align: left;
+        position: relative;
+        top: 0%;
+
+        text-transform: uppercase;
+        transform: translate(-50%, 0);
+        opacity: 0;
+        transition: all 500ms ease-in-out 0.2s;
+        position: relative;
+        z-index: 2;
+        font-weight: 800;
+        color: black;
+        text-shadow: 5px 5px rgba(0, 0, 0, 0.3);
+        font-size: 7vw;
+        margin: 0;
+      }
+      section > img {
+        position: fixed;
+        object-fit: cover;
+        top: 10vw;
+        left: 10vw;
+        width: 40vw;
+        height: 40vw;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 1s cubic-bezier(0.1, 0.44, 0.43, 1.15) 0.5s;
+        transform-origin: -30vw -30vw;
+        transform: rotate(-90deg);
+      }
+
+      .content {
+        z-index: 2;
+        background: #fff;
+        padding: 20px;
+        font-size: 18px;
+        font-weight: normal;
+        overflow: hidden;
+        box-shadow: 0 0 150px rgba(0, 0, 0, 0.2);
+        position: relative;
+        width: 40vw;
+        left: 60vw;
+        height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .content p {
+        line-height: 2.4;
+        opacity: 0;
+        transition: all 0.5s linear 0.3s;
+      }
+
+      .minion {
+        all: initial;
+        width: 30vw;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1s;
+        transform: translateY(100%);
+      }
+
+      .is-inview .minion {
+        transform: translateY(0);
+      }
+
+      .is-inview h2 {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      .is-inview .content p {
+        line-height: 1.5;
+        opacity: 1;
+      }
+
+      section.is-inview > img {
+        opacity: 1;
+        transform: rotate(0);
+        filter: drop-shadow(0 0 9px rgba(0, 0, 0, 0.1));
+      }
+    </style>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1147.0" data-gr-ext-installed="">
+    <div class="scroll__container" id="overflow-scroll">
+      <section class="is-inview">
+        <div class="content">
+          <h2 class="align-self-center">Rice</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia,
+            laborum voluptas quibusdam, inventore necessitatibus dolor, iusto
+            veniam fuga tempore vel porro dignissimos numquam expedita natus
+            totam quo? Ipsa, vel neque?
+          </p>
+        </div>
+        <img src="assets/rice.png" />
+      </section>
+      <section>
+        <div class="content">
+          <h2 class="align-self-center">Chicken</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia,
+            laborum voluptas quibusdam, inventore necessitatibus dolor, iusto
+            veniam fuga tempore vel porro dignissimos numquam expedita natus
+            totam quo? Ipsa, vel neque?
+          </p>
+        </div>
+        <img src="assets/chicken.png" />
+      </section>
+      <section>
+        <img src="assets/omlet.png" />
+        <div class="content">
+          <h2 class="align-self-center">Omlet</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia,
+            laborum voluptas quibusdam, inventore necessitatibus dolor, iusto
+            veniam fuga tempore vel porro dignissimos numquam expedita natus
+            totam quo? Ipsa, vel neque?
+          </p>
+        </div>
+      </section>
+      <section>
+        <div class="content">
+          <h2 class="align-self-center">Banana</h2>
+          <img src="assets/bob.png" alt="" class="minion" />
+        </div>
+        <img src="assets/banana.png" />
+      </section>
+    </div>
+
+    <script type="text/javascript">
+      var sections = document.querySelectorAll("section");
+      var container = document.querySelector(".scroll__container");
+      container.addEventListener("scroll", function () {
+        var topContainer = []; // = container.scrollTop;
+        //  console.clear();
+        sections.forEach((e, i) => {
+          var top = e.getBoundingClientRect().top;
+
+          //  console.log(top + " ");
+          if (top == 0) {
+            e.classList.add("is-inview");
+            //  topContainer.push( parseInt(top));
+          } else {
+            e.classList.remove("is-inview");
+          }
+        });
+      });
+      container.dispatchEvent(new CustomEvent("scroll"));
+    </script>
+  </body>
+  <grammarly-desktop-integration data-grammarly-shadow-root="true"
+    ><template shadowrootmode="open"
+      ><style>
+        div.grammarly-desktop-integration {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+          -moz-user-select: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        div.grammarly-desktop-integration:before {
+          content: attr(data-content);
+        }
+      </style>
+      <div
+        aria-label="grammarly-integration"
+        role="group"
+        tabindex="-1"
+        class="grammarly-desktop-integration"
+        data-content='{"mode":"full","isActive":true,"isUserDisabled":false}'
+      ></div></template
+  ></grammarly-desktop-integration>
+</html>
