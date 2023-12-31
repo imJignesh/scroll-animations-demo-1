@@ -24,9 +24,33 @@ You can view a live demo [here](https://imjignesh.com/viewer/?id=368&file=index-
 
 ## Features
 
-- **Scroll-triggered Animations:** Elements animate as the user scrolls through the content.
-- **Section-specific Content:** Each section introduces unique animations and content.
-- **Responsive Design:** The webpage is designed to be responsive for a seamless experience across different devices.
+- **Scroll-triggered Animations:** The project utilizes JavaScript to trigger animations based on the user's scroll position.
+
+  The JavaScript code below is responsible for detecting when each section of the webpage comes into view during scrolling. As a section becomes visible, it adds the "is-inview" class to trigger associated animations.
+
+  ```javascript
+  var sections = document.querySelectorAll("section");
+  var container = document.querySelector(".scroll__container");
+
+  container.addEventListener("scroll", function () {
+    sections.forEach((e, i) => {
+      var top = e.getBoundingClientRect().top;
+
+      if (top == 0) {
+        e.classList.add("is-inview");
+      } else {
+        e.classList.remove("is-inview");
+      }
+    });
+  });
+
+  // Dispatch a scroll event to initialize the state based on the initial scroll position
+  container.dispatchEvent(new CustomEvent("scroll"));
+  ```
+
+More info on:
+[scroll Based Animations](https://imjignesh.com/how-to-trigger-css-animation-on-scroll/) |
+[Trigger CSS Animation On Scroll](https://imjignesh.com/how-to-trigger-css-animation-on-scroll/)
 
 ## How to Use
 
